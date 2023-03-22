@@ -1,0 +1,9 @@
+{
+    "name":"Data Selector",
+    "version": "1.0.0",
+    "description":" Data Selector Web Component.",
+    "action":{
+        "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+}
