@@ -2,6 +2,14 @@
     "name":"Data Selector",
     "version": "1.0.0",
     "description":" Data Selector Web Component.",
+    "permissions": [
+        "activeTab",
+        "downloads",
+        "tabs"
+    ],
+    "background":{
+        "service_worker": "js/background.js"
+    },
     "action":{
         "default_popup": "popup.html"
     },
