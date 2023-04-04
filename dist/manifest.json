@@ -5,13 +5,26 @@
     "permissions": [
         "activeTab",
         "downloads",
-        "tabs"
+        "tabs",
+        "scripting",
+        "declarativeContent",
+        "background",
+        "http://*/*", 
+        "https://*/*",
+        "<all_urls>"
     ],
     "background":{
         "service_worker": "js/background.js"
+
     },
     "action":{
         "default_popup": "popup.html"
     },
+    "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": ["content_scripts/content.js"]
+        }
+      ],
     "manifest_version": 3
 }

@@ -7,12 +7,6 @@
   \*********************************/
 /***/ (() => {
 
-// chrome.tabs.onActivated.addListener(function(activeInfo) {
-//     chrome.tabs.get(activeInfo.tabId, function(tab) {
-//        console.log("Current URL: ", tab.url);
-//     });
-//  });
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === 'getTabUrl') {
     chrome.tabs.query({
@@ -25,6 +19,26 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     });
     return true;
   }
+});
+chrome.action.onClicked.addListener(function (tab) {
+  if (request.action === 'getTabUrl') {
+    chrome.tabs.query({
+      active: true,
+      currentWindow: true
+    }, function (tabs) {
+      sendResponse({
+        tabUrl: tabs[0].url
+      });
+    });
+    return true;
+  }
+  chrome.tabs.executeScript(tab.id, {
+    file: "content.js"
+  }).then(function () {
+    console.log('content.js loaded successfully');
+  })["catch"](function (err) {
+    console.error('Failed to load content.js:', err);
+  });
 });
 
 /***/ }),
