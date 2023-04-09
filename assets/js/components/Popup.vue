@@ -48,7 +48,7 @@
     <hr />
 
     <label for="format">Format</label>
-    <select name="format" id="format" class="select">
+    <select name="format" id="format" class="select" v-model="format">
       <option value="json">JSON</option>
       <option value="csv">CSV</option>
     </select>
@@ -66,6 +66,7 @@ export default {
     return {
       currentUrl: "",
       inputList: [{ value: "", disabled: false }],
+      format: "json",
     };
   },
   created() {
@@ -73,21 +74,21 @@ export default {
       this.currentUrl = response.tabUrl;
     });
 
-    chrome.runtime.onMessage.addListener((message) => {
-      if (message.type === "updateInputValue") {
-        const inputId = this.inputList.findIndex((input) => !input.disabled);
-        if (inputId >= 0) {
-          this.inputList[inputId].value = message.value;
-          this.inputList[inputId].disabled = true;
-        }
-      }
-    });
+    // chrome.runtime.onMessage.addListener((message) => {
+    //   if (message.type === "updateInputValue") {
+    //     const inputId = this.inputList.findIndex((input) => !input.disabled);
+    //     if (inputId >= 0) {
+    //       this.inputList[inputId].value = message.value;
+    //       this.inputList[inputId].disabled = true;
+    //     }
+    //   }
+    // });
   },
   methods: {
     addInput() {
       this.inputList.push({ value: "", disabled: false });
     },
-  },
+  },  
 };
 </script>
 

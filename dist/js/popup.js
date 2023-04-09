@@ -17426,7 +17426,8 @@ __webpack_require__.r(__webpack_exports__);
       inputList: [{
         value: "",
         disabled: false
-      }]
+      }],
+      format: "json"
     };
   },
   created: function created() {
@@ -17436,18 +17437,18 @@ __webpack_require__.r(__webpack_exports__);
     }, function (response) {
       _this.currentUrl = response.tabUrl;
     });
-    chrome.runtime.onMessage.addListener(function (message) {
-      if (message.type === "updateInputValue") {
-        var inputId = _this.inputList.findIndex(function (input) {
-          return !input.disabled;
-        });
-        if (inputId >= 0) {
-          _this.inputList[inputId].value = message.value;
-          _this.inputList[inputId].disabled = true;
-        }
-      }
-    });
+
+    // chrome.runtime.onMessage.addListener((message) => {
+    //   if (message.type === "updateInputValue") {
+    //     const inputId = this.inputList.findIndex((input) => !input.disabled);
+    //     if (inputId >= 0) {
+    //       this.inputList[inputId].value = message.value;
+    //       this.inputList[inputId].disabled = true;
+    //     }
+    //   }
+    // });
   },
+
   methods: {
     addInput: function addInput() {
       this.inputList.push({
@@ -17502,7 +17503,29 @@ var _hoisted_12 = [_hoisted_11];
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "add-text"
 }, "ADD", -1 /* HOISTED */);
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<hr><label for=\"format\">Format</label><select name=\"format\" id=\"format\" class=\"select\"><option value=\"json\">JSON</option><option value=\"csv\">CSV</option></select><br><br><div class=\"button-form\"><button class=\"confirm-bt\" type=\"submit\" value=\"Submit\">Confirm</button><button class=\"cancel-bt\">Cancel</button></div>", 6);
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1 /* HOISTED */);
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "format"
+}, "Format", -1 /* HOISTED */);
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "json"
+}, "JSON", -1 /* HOISTED */);
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "csv"
+}, "CSV", -1 /* HOISTED */);
+var _hoisted_18 = [_hoisted_16, _hoisted_17];
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "button-form"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "confirm-bt",
+  type: "submit",
+  value: "Submit"
+}, "Confirm"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "cancel-bt"
+}, "Cancel")], -1 /* HOISTED */);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", _hoisted_1, [_hoisted_2, _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
@@ -17533,7 +17556,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.addInput && $options.addInput.apply($options, arguments);
     })
-  }, _hoisted_12), _hoisted_13]), _hoisted_14]);
+  }, _hoisted_12), _hoisted_13]), _hoisted_14, _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    name: "format",
+    id: "format",
+    "class": "select",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.format = $event;
+    })
+  }, _hoisted_18, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.format]]), _hoisted_19, _hoisted_20, _hoisted_21]);
 }
 
 /***/ }),
