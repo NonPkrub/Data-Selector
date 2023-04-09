@@ -5,6 +5,11 @@ var __webpack_exports__ = {};
   \**********************************************/
 // content.js
 console.log("Hello content");
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  if (message.action === 'selectElement') {
+    selectElement();
+  }
+});
 var selectedElement;
 function selectElement(event) {
   event.preventDefault();
@@ -14,10 +19,33 @@ function selectElement(event) {
   }
   selectedElement = event.target;
   selectedElement.style.border = '2px solid red';
-  document.getElementById('status').innerHTML = 'Element selected: ' + selectedElement.tagName;
+  var clickedElementValue = "";
+  if (selectedElement.id) {
+    clickedElementValue = "#" + selectedElement.id;
+  } else if (selectedElement.className) {
+    clickedElementValue = "." + selectedElement.className.split(" ").join(".");
+  }
+  if (clickedElementValue) {
+    chrome.runtime.sendMessage({
+      type: "updateInputValue",
+      value: clickedElementValue
+    });
+  }
+  console.log(clickedElementValue);
+  document.addEventListener('mousemove', mousemoveHandler, {
+    passive: true
+  });
 }
 document.addEventListener('click', selectElement);
-
-// Get the selector for an element
+function mousemoveHandler(event) {
+  console.clear();
+  console.log(document.elementFromPoint(event.clientX, event.clientY));
+}
+document.addEventListener('mousemove', function (e) {
+  console.clear();
+  console.log(document.elementFromPoint(e.clientX, e.clientY));
+}, {
+  passive: true
+});
 /******/ })()
 ;

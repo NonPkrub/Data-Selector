@@ -20,24 +20,28 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     return true;
   }
 });
+
+// chrome.action.onClicked.addListener(function (tab) {
+
+//     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+//       sendResponse({ tabUrl: tabs[0].url });
+//       chrome.tabs.sendMessage(tab.id, {action: 'selectElement'});
+//       chrome.tabs.executeScript(tab.id, { file: "content.js" }).then(() => {
+//         console.log('content.js loaded successfully');
+//       }).catch((err) => {
+//         console.error('Failed to load content.js:', err);
+//       });
+//     });
+
+// });
 chrome.action.onClicked.addListener(function (tab) {
-  if (request.action === 'getTabUrl') {
-    chrome.tabs.query({
-      active: true,
-      currentWindow: true
-    }, function (tabs) {
-      sendResponse({
-        tabUrl: tabs[0].url
-      });
+  chrome.tabs.query({
+    active: true,
+    currentWindow: true
+  }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {
+      action: 'selectElement'
     });
-    return true;
-  }
-  chrome.tabs.executeScript(tab.id, {
-    file: "content.js"
-  }).then(function () {
-    console.log('content.js loaded successfully');
-  })["catch"](function (err) {
-    console.error('Failed to load content.js:', err);
   });
 });
 

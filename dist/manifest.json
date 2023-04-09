@@ -8,10 +8,7 @@
         "tabs",
         "scripting",
         "declarativeContent",
-        "background",
-        "http://*/*", 
-        "https://*/*",
-        "<all_urls>"
+        "background"
     ],
     "background":{
         "service_worker": "js/background.js"
@@ -20,6 +17,9 @@
     "action":{
         "default_popup": "popup.html"
     },
+    "host_permissions":[
+        "<all_urls>"
+    ],
     "content_scripts": [
         {
           "matches": ["<all_urls>"],
