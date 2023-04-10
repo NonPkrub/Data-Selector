@@ -54,8 +54,15 @@
     </select>
     <br /><br />
     <div class="button-form">
-      <button class="confirm-bt" type="submit" value="Submit">Confirm</button>
-      <button class="cancel-bt">Cancel</button>
+      <button
+        class="confirm-bt"
+        type="submit"
+        value="Submit"
+        @click="downloadData"
+      >
+        Confirm
+      </button>
+      <button class="cancel-bt" @click="clearInputs">Cancel</button>
     </div>
   </form>
 </template>
@@ -88,7 +95,24 @@ export default {
     addInput() {
       this.inputList.push({ value: "", disabled: false });
     },
-  },  
+    clearInputs() {
+      this.inputList = [{ value: "", disabled: false }];
+    },
+    downloadData() {
+      const data = {
+        url: this.currentUrl,
+        data: this.inputList.map((input) => input.value),
+        format: this.format,
+      };
+      const filename = "data.json";
+      const mimeType = "application/json";
+      const blob = new Blob([JSON.stringify(data)], { type: mimeType });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+    },
+  },
 };
 </script>
 

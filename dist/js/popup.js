@@ -17455,6 +17455,30 @@ __webpack_require__.r(__webpack_exports__);
         value: "",
         disabled: false
       });
+    },
+    clearInputs: function clearInputs() {
+      this.inputList = [{
+        value: "",
+        disabled: false
+      }];
+    },
+    downloadData: function downloadData() {
+      var data = {
+        url: this.currentUrl,
+        data: this.inputList.map(function (input) {
+          return input.value;
+        }),
+        format: this.format
+      };
+      var filename = "data.json";
+      var mimeType = "application/json";
+      var blob = new Blob([JSON.stringify(data)], {
+        type: mimeType
+      });
+      var link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
     }
   }
 });
@@ -17516,16 +17540,9 @@ var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_18 = [_hoisted_16, _hoisted_17];
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
 var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_21 = {
   "class": "button-form"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "confirm-bt",
-  type: "submit",
-  value: "Submit"
-}, "Confirm"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "cancel-bt"
-}, "Cancel")], -1 /* HOISTED */);
-
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", _hoisted_1, [_hoisted_2, _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
@@ -17563,7 +17580,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.format = $event;
     })
-  }, _hoisted_18, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.format]]), _hoisted_19, _hoisted_20, _hoisted_21]);
+  }, _hoisted_18, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.format]]), _hoisted_19, _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "confirm-bt",
+    type: "submit",
+    value: "Submit",
+    onClick: _cache[3] || (_cache[3] = function () {
+      return $options.downloadData && $options.downloadData.apply($options, arguments);
+    })
+  }, " Confirm "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "cancel-bt",
+    onClick: _cache[4] || (_cache[4] = function () {
+      return $options.clearInputs && $options.clearInputs.apply($options, arguments);
+    })
+  }, "Cancel")])]);
 }
 
 /***/ }),
