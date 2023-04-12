@@ -1,25 +1,25 @@
 {
-    "name":"Data Selector",
+    "name":"Data Selector Generate",
     "version": "1.0.0",
     "description":" Data Selector Web Component.",
     "permissions": [
         "activeTab",
         "downloads",
-        "tabs",
-        "scripting",
-        "declarativeContent",
-        "background"
+        "tabs"
     ],
     "background":{
         "service_worker": "js/background.js"
-
     },
+    "icons": {
+        "16": "images/analysis16.png",
+        "32": "images/analysis32.png",
+        "128": "images/analysis128.png"
+      },
     "action":{
         "default_popup": "popup.html"
     },
     "host_permissions":[
         "<all_urls>"
     ],
-    
     "manifest_version": 3
 }

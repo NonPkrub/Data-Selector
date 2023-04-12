@@ -1,5 +1,8 @@
 {
     "/dist/js/background.js": "/dist/js/background.js",
     "/dist/js/popup.js": "/dist/js/popup.js",
-    "/dist/css/popup.css": "/dist/css/popup.css"
+    "/dist/css/popup.css": "/dist/css/popup.css",
+    "/dist/images/analysis128.png": "/dist/images/analysis128.png",
+    "/dist/images/analysis16.png": "/dist/images/analysis16.png",
+    "/dist/images/analysis32.png": "/dist/images/analysis32.png"
 }
