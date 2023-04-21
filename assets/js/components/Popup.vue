@@ -64,6 +64,7 @@
         name="name"
         required
         size="25"
+        v-model="filename"
       />
     </div>
     <br>
@@ -88,6 +89,7 @@ export default {
       currentUrl: "",
       inputList: [{ value: "", disabled: false }],
       format: "json",
+      filename:""
     };
   },
   created() {
@@ -117,6 +119,7 @@ export default {
         url: this.currentUrl,
         data: this.inputList.map((input) => input.value),
         format: this.format,
+        filename: this.filename
       };
       const filename = "data.json";
       const mimeType = "application/json";
