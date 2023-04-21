@@ -4,7 +4,7 @@
       <h1>Data Selector</h1>
     </div>
     <div>
-      <p>URL:</p>
+      <h3>URL:</h3>
       <p>(Go to the desired site, it will input the address automatically.)</p>
     </div>
     <div>
@@ -21,7 +21,7 @@
     <br />
     <hr />
     <div>
-      <p>DATA:</p>
+      <h3>DATA:</h3>
       <p>(Use Ctl+Shift+I, inspect elements to add chosen data attributes)</p>
     </div>
     <div style="display: flex; justify-content: center"></div>
@@ -52,7 +52,21 @@
       <option value="json">JSON</option>
       <option value="csv">CSV</option>
     </select>
-    <br /><br />
+    <br />
+    <div>
+      <h3>File Name:</h3>
+      <p>(Input file name of the scraped data.)</p>
+    </div>
+    <div>
+      <input
+        type="text"
+        id="url"
+        name="name"
+        required
+        size="25"
+      />
+    </div>
+    <br>
     <div class="button-form">
       <button
         class="confirm-bt"
