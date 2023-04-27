@@ -67,7 +67,7 @@
         v-model="filename"
       />
     </div>
-    <br>
+    <br />
     <div class="button-form">
       <button
         class="confirm-bt"
@@ -89,7 +89,7 @@ export default {
       currentUrl: "",
       inputList: [{ value: "", disabled: false }],
       format: "json",
-      filename:""
+      filename: "",
     };
   },
   created() {
@@ -117,9 +117,9 @@ export default {
     downloadData() {
       const data = {
         url: this.currentUrl,
-        data: this.inputList.map((input) => input.value),
+        data: this.inputList.map((input) => ({ selector: input.value })),
         format: this.format,
-        filename: this.filename
+        filename: this.filename,
       };
       const filename = "data.json";
       const mimeType = "application/json";

@@ -17467,7 +17467,9 @@ __webpack_require__.r(__webpack_exports__);
       var data = {
         url: this.currentUrl,
         data: this.inputList.map(function (input) {
-          return input.value;
+          return {
+            selector: input.value
+          };
         }),
         format: this.format,
         filename: this.filename
