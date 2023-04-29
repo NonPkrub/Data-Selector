@@ -135,6 +135,7 @@ export default {
     downloadData() {
       const data = {
         url: this.currentUrl,
+        dataset: this.dataset,
         data: this.inputList.map((input) => ({ selector: input.value })),
         format: this.format,
         filename: this.filename,

@@ -17469,6 +17469,7 @@ __webpack_require__.r(__webpack_exports__);
     downloadData: function downloadData() {
       var data = {
         url: this.currentUrl,
+        dataset: this.dataset,
         data: this.inputList.map(function (input) {
           return {
             selector: input.value
