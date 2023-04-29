@@ -18,6 +18,21 @@
         disabled
       />
     </div>
+    <div>
+      <h3>DATASET:</h3>
+      <p>(Input number of dataset)</p>
+    </div>
+    <div>
+      <input
+        type="number"
+        id="number"
+        name="name"
+        required
+        size="25"
+        v-model="dataset"
+        min="1"
+      />
+    </div>
     <br />
     <hr />
     <div>
@@ -87,6 +102,7 @@ export default {
   data() {
     return {
       currentUrl: "",
+      dataset: 1,
       inputList: [{ value: "", disabled: false }],
       format: "json",
       filename: "",
@@ -113,6 +129,8 @@ export default {
     },
     clearInputs() {
       this.inputList = [{ value: "", disabled: false }];
+      this.dataset = 1;
+      this.filename = "";
     },
     downloadData() {
       const data = {
