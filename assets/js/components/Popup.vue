@@ -112,7 +112,24 @@ export default {
     chrome.runtime.sendMessage({ action: "getTabUrl" }, (response) => {
       this.currentUrl = response.tabUrl;
     });
-
+    // chrome.storage.local.get(
+    //   ["dataset", "inputList", "format", "filename"],
+    //   (data) => {
+    //     if (data.dataset) this.dataset = data.dataset;
+    //     if (data.inputList) this.inputList = data.inputList;
+    //     if (data.format) this.format = data.format;
+    //     if (data.filename) this.filename = data.filename;
+    //   }
+    // );
+    chrome.storage.local.get(
+      ["dataset", "inputList", "format", "filename"],
+      (data) => {
+        if (data.dataset) this.dataset = data.dataset;
+        if (data.inputList) this.inputList = data.inputList;
+        if (data.format) this.format = data.format;
+        if (data.filename) this.filename = data.filename;
+      }
+    );
     // chrome.runtime.onMessage.addListener((message) => {
     //   if (message.type === "updateInputValue") {
     //     const inputId = this.inputList.findIndex((input) => !input.disabled);
@@ -123,6 +140,29 @@ export default {
     //   }
     // });
   },
+  watch: {
+    dataset: {
+      handler(newVal) {
+        this.saveToLocalStorage();
+      },
+    },
+    inputList: {
+      handler(newVal) {
+        this.saveToLocalStorage();
+      },
+      deep: true, // To watch for changes within the array
+    },
+    format: {
+      handler(newVal) {
+        this.saveToLocalStorage();
+      },
+    },
+    filename: {
+      handler(newVal) {
+        this.saveToLocalStorage();
+      },
+    },
+  },
   methods: {
     addInput() {
       this.inputList.push({ value: "", disabled: false });
@@ -131,6 +171,14 @@ export default {
       this.inputList = [{ value: "", disabled: false }];
       this.dataset = 1;
       this.filename = "";
+
+      // chrome.storage.local.remove([
+      //   "dataset",
+      //   "inputList",
+      //   "format",
+      //   "filename",
+      // ]);
+      chrome.runtime.sendMessage({ action: "clearData" });
     },
     downloadData() {
       const data = {
@@ -148,12 +196,15 @@ export default {
       link.download = filename;
       link.click();
     },
+
+    saveToLocalStorage() {
+      chrome.storage.local.set({
+        dataset: this.dataset,
+        inputList: this.inputList,
+        format: this.format,
+        filename: this.filename,
+      });
+    },
   },
 };
 </script>
-
-
-
-
-
-

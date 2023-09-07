@@ -8,7 +8,7 @@
 /***/ (() => {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action === 'getTabUrl') {
+  if (request.action === "getTabUrl") {
     chrome.tabs.query({
       active: true,
       currentWindow: true
@@ -20,7 +20,49 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     return true;
   }
 });
+// Use a regular function to access the correct context
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  if (message.type === "updateInputValue") {
+    var inputId = storedData.inputList.findIndex(function (input) {
+      return !input.disabled;
+    });
+    if (inputId >= 0) {
+      storedData.inputList[inputId].value = message.value;
+      storedData.inputList[inputId].disabled = true;
+      // Save the updated data
+      chrome.storage.local.set({
+        inputList: storedData.inputList
+      });
+    }
+  }
+});
 
+// Or, explicitly bind the function to the Vue instance// Initialize stored data
+var storedData = {};
+
+// Message listener
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  if (message.action === "saveData") {
+    storedData = message.data;
+    chrome.storage.local.set(storedData);
+  } else if (message.action === "clearData") {
+    storedData = {};
+    chrome.storage.local.clear();
+  }
+});
+
+// let storedData = {};
+
+// // Message listener
+// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+//   if (message.action === "saveData") {
+//     storedData = message.data;
+//     chrome.storage.local.set(storedData);
+//   } else if (message.action === "clearData") {
+//     storedData = {};
+//     chrome.storage.local.clear();
+//   }
+// });
 // chrome.action.onClicked.addListener(function (tab) {
 //   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 

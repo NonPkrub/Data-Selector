@@ -17439,7 +17439,21 @@ __webpack_require__.r(__webpack_exports__);
     }, function (response) {
       _this.currentUrl = response.tabUrl;
     });
-
+    // chrome.storage.local.get(
+    //   ["dataset", "inputList", "format", "filename"],
+    //   (data) => {
+    //     if (data.dataset) this.dataset = data.dataset;
+    //     if (data.inputList) this.inputList = data.inputList;
+    //     if (data.format) this.format = data.format;
+    //     if (data.filename) this.filename = data.filename;
+    //   }
+    // );
+    chrome.storage.local.get(["dataset", "inputList", "format", "filename"], function (data) {
+      if (data.dataset) _this.dataset = data.dataset;
+      if (data.inputList) _this.inputList = data.inputList;
+      if (data.format) _this.format = data.format;
+      if (data.filename) _this.filename = data.filename;
+    });
     // chrome.runtime.onMessage.addListener((message) => {
     //   if (message.type === "updateInputValue") {
     //     const inputId = this.inputList.findIndex((input) => !input.disabled);
@@ -17451,6 +17465,30 @@ __webpack_require__.r(__webpack_exports__);
     // });
   },
 
+  watch: {
+    dataset: {
+      handler: function handler(newVal) {
+        this.saveToLocalStorage();
+      }
+    },
+    inputList: {
+      handler: function handler(newVal) {
+        this.saveToLocalStorage();
+      },
+      deep: true // To watch for changes within the array
+    },
+
+    format: {
+      handler: function handler(newVal) {
+        this.saveToLocalStorage();
+      }
+    },
+    filename: {
+      handler: function handler(newVal) {
+        this.saveToLocalStorage();
+      }
+    }
+  },
   methods: {
     addInput: function addInput() {
       this.inputList.push({
@@ -17465,6 +17503,16 @@ __webpack_require__.r(__webpack_exports__);
       }];
       this.dataset = 1;
       this.filename = "";
+
+      // chrome.storage.local.remove([
+      //   "dataset",
+      //   "inputList",
+      //   "format",
+      //   "filename",
+      // ]);
+      chrome.runtime.sendMessage({
+        action: "clearData"
+      });
     },
     downloadData: function downloadData() {
       var data = {
@@ -17487,6 +17535,14 @@ __webpack_require__.r(__webpack_exports__);
       link.href = URL.createObjectURL(blob);
       link.download = filename;
       link.click();
+    },
+    saveToLocalStorage: function saveToLocalStorage() {
+      chrome.storage.local.set({
+        dataset: this.dataset,
+        inputList: this.inputList,
+        format: this.format,
+        filename: this.filename
+      });
     }
   }
 });
