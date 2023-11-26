@@ -1,6 +1,7 @@
 .add {
   display: flex;
   align-items: center;
+  width: 250px;
 }
 
 .button {

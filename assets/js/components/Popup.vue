@@ -66,7 +66,26 @@
     <select name="format" id="format" class="select" v-model="format">
       <option value="json">JSON</option>
       <option value="csv">CSV</option>
+      <option value="db">Database</option>
     </select>
+    <br />
+    <div v-if="format === 'db'">
+      <div>
+        <h3>Date</h3>
+        <p>(Input the start and end date)</p>
+      </div>
+      <VueDatePicker
+        v-model="startDate"
+        placeholder="Start Typing ..."
+        text-input
+      />
+      <br />
+      <VueDatePicker
+        v-model="endDate"
+        placeholder="Start Typing ..."
+        text-input
+      />
+    </div>
     <br />
     <div>
       <h3>File Name:</h3>
@@ -98,6 +117,7 @@
 </template>
 
 <script>
+import { ref } from "vue";
 export default {
   data() {
     return {
@@ -106,63 +126,52 @@ export default {
       inputList: [{ value: "", disabled: false }],
       format: "json",
       filename: "",
+      startDate: ref(),
+      endDate: ref(),
     };
   },
   created() {
     chrome.runtime.sendMessage({ action: "getTabUrl" }, (response) => {
       this.currentUrl = response.tabUrl;
     });
-    // chrome.storage.local.get(
-    //   ["dataset", "inputList", "format", "filename"],
-    //   (data) => {
-    //     if (data.dataset) this.dataset = data.dataset;
-    //     if (data.inputList) this.inputList = data.inputList;
-    //     if (data.format) this.format = data.format;
-    //     if (data.filename) this.filename = data.filename;
-    //   }
-    // );
+
     chrome.storage.local.get(
-      ["dataset", "inputList", "format", "filename"],
+      ["dataset", "inputList", "format", "filename", "startDate", "endDate"],
       (data) => {
         if (data.dataset) this.dataset = data.dataset;
         if (data.inputList) this.inputList = data.inputList;
         if (data.format) this.format = data.format;
         if (data.filename) this.filename = data.filename;
+        if (data.startDate)
+          this.format == "db" ? (this.startDate = data.startDate) : null;
+        if (data.endDate)
+          this.format == "db" ? (this.endDate = data.endDate) : null;
       }
     );
-    // chrome.runtime.onMessage.addListener((message) => {
-    //   if (message.type === "updateInputValue") {
-    //     const inputId = this.inputList.findIndex((input) => !input.disabled);
-    //     if (inputId >= 0) {
-    //       this.inputList[inputId].value = message.value;
-    //       this.inputList[inputId].disabled = true;
-    //     }
-    //   }
-    // });
   },
-  watch: {
-    dataset: {
-      handler(newVal) {
-        this.saveToLocalStorage();
-      },
-    },
-    inputList: {
-      handler(newVal) {
-        this.saveToLocalStorage();
-      },
-      deep: true, // To watch for changes within the array
-    },
-    format: {
-      handler(newVal) {
-        this.saveToLocalStorage();
-      },
-    },
-    filename: {
-      handler(newVal) {
-        this.saveToLocalStorage();
-      },
-    },
-  },
+  // watch: {
+  //   dataset: {
+  //     handler(newVal) {
+  //       this.saveToLocalStorage();
+  //     },
+  //   },
+  //   inputList: {
+  //     handler(newVal) {
+  //       this.saveToLocalStorage();
+  //     },
+  //     deep: true,
+  //   },
+  //   format: {
+  //     handler(newVal) {
+  //       this.saveToLocalStorage();
+  //     },
+  //   },
+  //   filename: {
+  //     handler(newVal) {
+  //       this.saveToLocalStorage();
+  //     },
+  //   },
+  // },
   methods: {
     addInput() {
       this.inputList.push({ value: "", disabled: false });
@@ -187,6 +196,8 @@ export default {
         data: this.inputList.map((input) => ({ selector: input.value })),
         format: this.format,
         filename: this.filename,
+        startDate: this.format == "db" ? this.startDate : null,
+        endDate: this.format == "db" ? this.endDate : null,
       };
       const filename = "data.json";
       const mimeType = "application/json";
@@ -203,6 +214,8 @@ export default {
         inputList: this.inputList,
         format: this.format,
         filename: this.filename,
+        startDate: this.format == "db" ? this.startDate : null,
+        endDate: this.format == "db" ? this.endDate : null,
       });
     },
   },
