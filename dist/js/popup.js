@@ -17452,29 +17452,39 @@ __webpack_require__.r(__webpack_exports__);
       if (data.endDate) _this.format == "db" ? _this.endDate = data.endDate : null;
     });
   },
-  // watch: {
-  //   dataset: {
-  //     handler(newVal) {
-  //       this.saveToLocalStorage();
-  //     },
-  //   },
-  //   inputList: {
-  //     handler(newVal) {
-  //       this.saveToLocalStorage();
-  //     },
-  //     deep: true,
-  //   },
-  //   format: {
-  //     handler(newVal) {
-  //       this.saveToLocalStorage();
-  //     },
-  //   },
-  //   filename: {
-  //     handler(newVal) {
-  //       this.saveToLocalStorage();
-  //     },
-  //   },
-  // },
+  watch: {
+    dataset: {
+      handler: function handler(newVal) {
+        this.saveToLocalStorage();
+      }
+    },
+    inputList: {
+      handler: function handler(newVal) {
+        this.saveToLocalStorage();
+      },
+      deep: true
+    },
+    format: {
+      handler: function handler(newVal) {
+        this.saveToLocalStorage();
+      }
+    },
+    filename: {
+      handler: function handler(newVal) {
+        this.saveToLocalStorage();
+      }
+    },
+    startDate: {
+      handler: function handler(newVal) {
+        this.saveToLocalStorage();
+      }
+    },
+    endDate: {
+      handler: function handler(newVal) {
+        this.saveToLocalStorage();
+      }
+    }
+  },
   methods: {
     addInput: function addInput() {
       this.inputList.push({

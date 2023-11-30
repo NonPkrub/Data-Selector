@@ -149,29 +149,39 @@ export default {
       }
     );
   },
-  // watch: {
-  //   dataset: {
-  //     handler(newVal) {
-  //       this.saveToLocalStorage();
-  //     },
-  //   },
-  //   inputList: {
-  //     handler(newVal) {
-  //       this.saveToLocalStorage();
-  //     },
-  //     deep: true,
-  //   },
-  //   format: {
-  //     handler(newVal) {
-  //       this.saveToLocalStorage();
-  //     },
-  //   },
-  //   filename: {
-  //     handler(newVal) {
-  //       this.saveToLocalStorage();
-  //     },
-  //   },
-  // },
+  watch: {
+    dataset: {
+      handler(newVal) {
+        this.saveToLocalStorage();
+      },
+    },
+    inputList: {
+      handler(newVal) {
+        this.saveToLocalStorage();
+      },
+      deep: true,
+    },
+    format: {
+      handler(newVal) {
+        this.saveToLocalStorage();
+      },
+    },
+    filename: {
+      handler(newVal) {
+        this.saveToLocalStorage();
+      },
+    },
+    startDate: {
+      handler(newVal) {
+        this.saveToLocalStorage();
+      },
+    },
+    endDate: {
+      handler(newVal) {
+        this.saveToLocalStorage();
+      },
+    },
+  },
   methods: {
     addInput() {
       this.inputList.push({ value: "", disabled: false });
