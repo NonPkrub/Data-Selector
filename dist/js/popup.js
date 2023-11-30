@@ -17438,12 +17438,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     var _this = this;
+    // chrome.runtime.sendMessage({ action: "getTabUrl" }, (response) => {
+    //   this.currentUrl = response.tabUrl;
+    // });
     chrome.runtime.sendMessage({
       action: "getTabUrl"
     }, function (response) {
-      _this.currentUrl = response.tabUrl;
+      if (response && response.tabUrl) {
+        _this.currentUrl = response.tabUrl;
+      } else {
+        // Handle the case when response or response.tabUrl is undefined
+        console.error("Error retrieving tab URL:", response);
+      }
     });
-    chrome.storage.local.get(["dataset", "inputList", "format", "filename", "startDate", "endDate"], function (data) {
+    chrome.storage.local.get(["currentUrl", "dataset", "inputList", "format", "filename", "startDate", "endDate"], function (data) {
+      if (data.currentUrl) _this.currentUrl = data.currentUrl;
       if (data.dataset) _this.dataset = data.dataset;
       if (data.inputList) _this.inputList = data.inputList;
       if (data.format) _this.format = data.format;
@@ -17541,6 +17550,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     saveToLocalStorage: function saveToLocalStorage() {
       chrome.storage.local.set({
+        currentUrl: this.currentUrl,
         dataset: this.dataset,
         inputList: this.inputList,
         format: this.format,

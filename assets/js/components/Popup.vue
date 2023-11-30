@@ -131,13 +131,30 @@ export default {
     };
   },
   created() {
+    // chrome.runtime.sendMessage({ action: "getTabUrl" }, (response) => {
+    //   this.currentUrl = response.tabUrl;
+    // });
     chrome.runtime.sendMessage({ action: "getTabUrl" }, (response) => {
-      this.currentUrl = response.tabUrl;
+      if (response && response.tabUrl) {
+        this.currentUrl = response.tabUrl;
+      } else {
+        // Handle the case when response or response.tabUrl is undefined
+        console.error("Error retrieving tab URL:", response);
+      }
     });
 
     chrome.storage.local.get(
-      ["dataset", "inputList", "format", "filename", "startDate", "endDate"],
+      [
+        "currentUrl",
+        "dataset",
+        "inputList",
+        "format",
+        "filename",
+        "startDate",
+        "endDate",
+      ],
       (data) => {
+        if (data.currentUrl) this.currentUrl = data.currentUrl;
         if (data.dataset) this.dataset = data.dataset;
         if (data.inputList) this.inputList = data.inputList;
         if (data.format) this.format = data.format;
@@ -225,6 +242,7 @@ export default {
 
     saveToLocalStorage() {
       chrome.storage.local.set({
+        currentUrl: this.currentUrl,
         dataset: this.dataset,
         inputList: this.inputList,
         format: this.format,

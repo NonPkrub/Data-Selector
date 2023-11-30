@@ -1,11 +1,24 @@
+// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+//   if (request.action === "getTabUrl") {
+//     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+//       sendResponse({ tabUrl: tabs[0].url });
+//     });
+//     return true;
+//   }
+// });
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "getTabUrl") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       sendResponse({ tabUrl: tabs[0].url });
     });
     return true;
+  } else if (request.action === "clearData") {
+    // Implement the logic to clear data here
+    // For example: Clear any stored data or perform necessary cleanup
+    console.log("Clearing data...");
   }
 });
+
 // Use a regular function to access the correct context
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   if (message.type === "updateInputValue") {
