@@ -17453,6 +17453,11 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   watch: {
+    currentUrl: {
+      handler: function handler(newVal) {
+        this.saveToLocalStorage();
+      }
+    },
     dataset: {
       handler: function handler(newVal) {
         this.saveToLocalStorage();

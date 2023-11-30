@@ -150,6 +150,11 @@ export default {
     );
   },
   watch: {
+    currentUrl: {
+      handler(newVal) {
+        this.saveToLocalStorage();
+      },
+    },
     dataset: {
       handler(newVal) {
         this.saveToLocalStorage();
